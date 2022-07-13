@@ -1,0 +1,31 @@
+:host {
+  display: grid;
+  grid-template: 20px max-content 1fr / 20px max-content 1fr;
+}
+
+table {
+  grid-area: 2 / 2 / 3 / 3;
+  width: 100%;
+}
+
+.mat-column-position {
+  width: 24px;
+  padding-right: 24px;
+  text-align: center;
+}
+
+.mat-column-names {
+  width: 360px;
+}
+
+.mat-column-genre {
+  width: 80px;
+}
+
+.mat-column-birth {
+  width: 105px;
+}
+
+.mat-column-state {
+  width: 100px;
+}

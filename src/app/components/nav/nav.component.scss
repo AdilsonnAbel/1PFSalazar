@@ -1,0 +1,20 @@
+:host {
+  display: grid;
+  grid-template: 10px minmax(0, 1fr) 10px / 10px minmax(0, 1fr) 10px;
+  box-shadow: 3px 0 5px -1px hsla(0, 0%, 0%, 0.2),
+    6px 0 10px hsla(0, 0%, 0%, 0.141), 1px 0 18px hsla(0, 0%, 0%, 0.122);
+}
+
+mat-nav-list {
+  grid-area: 2 / 2 / 3 / 3;
+  padding-top: 0;
+
+  a.select {
+    background-color: hsla(231, 48%, 48%, 0.15);
+    color: hsl(231, 48%, 48%);
+  }
+
+  a.select:hover {
+    background-color: hsla(231, 48%, 48%, 0.3);
+  }
+}

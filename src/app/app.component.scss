@@ -1,0 +1,17 @@
+:host {
+  height: 100%;
+  display: grid;
+  grid-template: max-content 0px minmax(0, 1fr) / max-content minmax(0, 1fr);
+
+  > app-header {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+
+  > app-nav {
+    grid-area: 2 / 1 / 4 / 2;
+  }
+
+  > router-outlet {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+}
