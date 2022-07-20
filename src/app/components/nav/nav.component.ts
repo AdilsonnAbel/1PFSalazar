@@ -13,6 +13,6 @@ export class NavComponent implements OnInit {
   constructor(private studentsService: StudentsService) {}
 
   ngOnInit(): void {
-    this.rooms = this.studentsService.getRoomsNames();
+    this.rooms = this.studentsService.rooms;
   }
 }

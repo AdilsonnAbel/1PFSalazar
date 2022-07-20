@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
-  FormGroupDirective,
+  FormControl,
+  FormGroup,
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
+  ControlStudent,
   Student,
   typeClassroom,
   typeData,
@@ -22,9 +24,8 @@ import { regexEmail, regexFN, regexLN } from 'src/app/utils/regexs';
   styleUrls: ['./form.component.scss'],
 })
 export class FormComponent implements OnInit {
-  public edit: boolean = false;
-
-  public formStudent = this.formBuilder.group({
+  private _edit: boolean = false;
+  private _formStudent: FormGroup<ControlStudent> = this.formBuilder.group({
     firstNames: ['', [Validators.required, Validators.pattern(regexFN)]],
     lastNames: ['', [Validators.required, Validators.pattern(regexLN)]],
     genre: ['', Validators.required],
@@ -34,74 +35,56 @@ export class FormComponent implements OnInit {
     state: ['', Validators.required],
   });
 
-  private idStudent!: number;
-
   constructor(
+    @Inject(MAT_DIALOG_DATA)
+    private _data: { signal: boolean; student: Student },
     private formBuilder: NonNullableFormBuilder,
-    private studentsService: StudentsService,
-    private route: ActivatedRoute,
-    private router: Router
+    private studentsService: StudentsService
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((e) => {
-      const id: string | null = e.get('id');
-
-      if (id) {
-        if (id === 'new') {
-          this.edit = false;
-          this.formStudent.reset();
-        } else {
-          const idx: number = Number(id);
-          if (idx) {
-            const student: Student | undefined =
-              this.studentsService.getStudent(idx);
-
-            if (student) {
-              this.edit = true;
-              this.idStudent = idx;
-              this.patchForm(student);
-            }
-          }
-        }
-      }
-    });
-  }
-
-  get firstNames() {
-    return this.formStudent.controls.firstNames;
-  }
-
-  get lastNames() {
-    return this.formStudent.controls.lastNames;
-  }
-  get genre() {
-    return this.formStudent.controls.genre;
-  }
-
-  get birth() {
-    return this.formStudent.controls.birth;
-  }
-
-  get email() {
-    return this.formStudent.controls.email;
-  }
-
-  get classroom() {
-    return this.formStudent.controls.classroom;
-  }
-
-  get state() {
-    return this.formStudent.controls.state;
-  }
-
-  public onSubmit(formGroupDirective: FormGroupDirective): void {
-    if (this.edit) {
-      this.editStudent(formGroupDirective);
-      this.router.navigate(['/edit']);
+    if (this._data.signal) {
+      this._edit = true;
+      this.patchForm(this._data.student);
     } else {
-      this.addStudent(formGroupDirective);
+      this._edit = false;
     }
+  }
+
+  get edit(): boolean {
+    return this._edit;
+  }
+
+  get formStudent(): FormGroup<ControlStudent> {
+    return this._formStudent;
+  }
+
+  get firstNames(): FormControl<string> {
+    return this._formStudent.controls.firstNames;
+  }
+
+  get lastNames(): FormControl<string> {
+    return this._formStudent.controls.lastNames;
+  }
+
+  get genre(): FormControl<string> {
+    return this._formStudent.controls.genre;
+  }
+
+  get birth(): FormControl<string> {
+    return this._formStudent.controls.birth;
+  }
+
+  get email(): FormControl<string> {
+    return this._formStudent.controls.email;
+  }
+
+  get classroom(): FormControl<string> {
+    return this._formStudent.controls.classroom;
+  }
+
+  get state(): FormControl<string> {
+    return this._formStudent.controls.state;
   }
 
   public firstNamesInvalid(): string {
@@ -125,7 +108,7 @@ export class FormComponent implements OnInit {
 
   public birthInvalid(): string {
     return this.birth.errors?.['required']
-      ? 'The date of birth is not valid, the format is dd/mm/yyyyy.'
+      ? 'The date of birth is not valid, the format is mm/dd/yyyyy.'
       : '';
   }
 
@@ -144,9 +127,13 @@ export class FormComponent implements OnInit {
     return this.state.errors?.['required'] ? 'You must select a status.' : '';
   }
 
-  private addStudent(formGroupDirective: FormGroupDirective): void {
+  public onSubmit(): void {
+    this.edit ? this.editStudent() : this.addStudent();
+  }
+
+  private addStudent(): void {
     const { firstNames, lastNames, genre, birth, email, classroom, state } =
-      this.formStudent.getRawValue();
+      this._formStudent.getRawValue();
 
     const student: Student = {
       active: true,
@@ -167,15 +154,12 @@ export class FormComponent implements OnInit {
       },
     };
 
-    this.formStudent.reset();
-    formGroupDirective.resetForm();
-
     this.studentsService.addStudent(student);
   }
 
-  private editStudent(formGroupDirective: FormGroupDirective): void {
+  private editStudent(): void {
     const { firstNames, lastNames, genre, birth, email, classroom, state } =
-      this.formStudent.getRawValue();
+      this._formStudent.getRawValue();
 
     const data: typeData = {
       birth: birth.toString(),
@@ -192,10 +176,7 @@ export class FormComponent implements OnInit {
       state: state as typeState,
     };
 
-    this.studentsService.editStudent(this.idStudent, data);
-
-    this.formStudent.reset();
-    formGroupDirective.resetForm();
+    this.studentsService.editStudent(this._data.student.id, data);
   }
 
   private patchForm(student: Student): void {
@@ -210,7 +191,7 @@ export class FormComponent implements OnInit {
       },
     }: Student = student;
 
-    this.formStudent.patchValue({
+    this._formStudent.patchValue({
       firstNames: firstNames.join(' '),
       lastNames: lastNames.join(' '),
       genre,

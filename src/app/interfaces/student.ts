@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 export type typeClassroom =
   | 'alpha'
   | 'beta'
@@ -29,11 +31,20 @@ export type typeData = {
 
 export interface Student {
   active: boolean;
-  id: number;
   data: typeData;
+  id: number;
 }
 
-export interface StudentId {
-  id: number;
-  name: string;
+export interface ControlStudent {
+  firstNames: FormControl<string>;
+  lastNames: FormControl<string>;
+  genre: FormControl<string>;
+  birth: FormControl<string>;
+  email: FormControl<string>;
+  classroom: FormControl<string>;
+  state: FormControl<string>;
+}
+
+export interface ControlSearch {
+  search: FormControl<string>;
 }

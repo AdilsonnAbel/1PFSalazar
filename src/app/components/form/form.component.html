@@ -1,95 +1,87 @@
-<div>
-  <form
-    [formGroup]="formStudent"
-    #formDirective="ngForm"
-    novalidate
-    (ngSubmit)="onSubmit(formDirective)"
-  >
-    <h1>{{ edit ? "Edit" : "Add" }} Student</h1>
+<form [formGroup]="formStudent" novalidate (ngSubmit)="onSubmit()">
+  <h1>{{ edit ? "Edit" : "Add" }} Student</h1>
 
-    <mat-form-field appearance="standard">
-      <mat-label>First name</mat-label>
-      <input
-        matInput
-        placeholder="Enter your first name."
-        formControlName="firstNames"
-      />
-      <mat-error *ngIf="firstNames.invalid">{{
-        firstNamesInvalid()
-      }}</mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>First name</mat-label>
+    <input
+      matInput
+      placeholder="Enter your first name."
+      formControlName="firstNames"
+    />
+    <mat-error *ngIf="firstNames.invalid">{{ firstNamesInvalid() }}</mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Last name</mat-label>
-      <input
-        matInput
-        placeholder="Enter your last name."
-        formControlName="lastNames"
-      />
-      <mat-error *ngIf="lastNames.invalid">{{ lastNamesInvalid() }}</mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Last name</mat-label>
+    <input
+      matInput
+      placeholder="Enter your last name."
+      formControlName="lastNames"
+    />
+    <mat-error *ngIf="lastNames.invalid">{{ lastNamesInvalid() }}</mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Genre</mat-label>
-      <mat-select formControlName="genre">
-        <mat-option value="female">Female</mat-option>
-        <mat-option value="male">Male</mat-option>
-        <mat-option value="others">Others</mat-option>
-      </mat-select>
-      <mat-error *ngIf="genre.invalid">{{ genreInvalid() }}</mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Genre</mat-label>
+    <mat-select formControlName="genre">
+      <mat-option value="female">Female</mat-option>
+      <mat-option value="male">Male</mat-option>
+      <mat-option value="others">Others</mat-option>
+    </mat-select>
+    <mat-error *ngIf="genre.invalid">{{ genreInvalid() }}</mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Date of birth</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="birth" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-error *ngIf="birth.invalid">{{ birthInvalid() }}</mat-error>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Date of birth</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="birth" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-error *ngIf="birth.invalid">{{ birthInvalid() }}</mat-error>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Email</mat-label>
-      <input
-        matInput
-        placeholder="Enter your e-mail address."
-        formControlName="email"
-      />
-      <mat-error *ngIf="email.invalid">{{ emailInvalid() }}</mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Email</mat-label>
+    <input
+      matInput
+      placeholder="Enter your e-mail address."
+      formControlName="email"
+    />
+    <mat-error *ngIf="email.invalid">{{ emailInvalid() }}</mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>Classroom</mat-label>
-      <mat-select formControlName="classroom">
-        <mat-option value="alpha">Alpha</mat-option>
-        <mat-option value="beta">Beta</mat-option>
-        <mat-option value="gamma">Gamma</mat-option>
-        <mat-option value="delta">Delta</mat-option>
-        <mat-option value="epsilon">Epsilon</mat-option>
-        <mat-option value="zeta">Zeta</mat-option>
-        <mat-option value="eta">Eta</mat-option>
-      </mat-select>
-      <mat-error *ngIf="classroom.invalid">{{ classroomInvalid() }}</mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Classroom</mat-label>
+    <mat-select formControlName="classroom">
+      <mat-option value="alpha">Alpha</mat-option>
+      <mat-option value="beta">Beta</mat-option>
+      <mat-option value="gamma">Gamma</mat-option>
+      <mat-option value="delta">Delta</mat-option>
+      <mat-option value="epsilon">Epsilon</mat-option>
+      <mat-option value="zeta">Zeta</mat-option>
+      <mat-option value="eta">Eta</mat-option>
+    </mat-select>
+    <mat-error *ngIf="classroom.invalid">{{ classroomInvalid() }}</mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <mat-label>State</mat-label>
-      <mat-select formControlName="state">
-        <mat-option value="approved">Approved</mat-option>
-        <mat-option value="disapproved">Disapproved</mat-option>
-      </mat-select>
-      <mat-error *ngIf="state.invalid">{{ stateInvalid() }}</mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>State</mat-label>
+    <mat-select formControlName="state">
+      <mat-option value="approved">Approved</mat-option>
+      <mat-option value="disapproved">Disapproved</mat-option>
+    </mat-select>
+    <mat-error *ngIf="state.invalid">{{ stateInvalid() }}</mat-error>
+  </mat-form-field>
 
-    <div>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="formStudent.invalid"
-      >
-        {{ edit ? "SAVE" : "REGISTER" }}
-      </button>
-    </div>
-  </form>
-</div>
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="formStudent.invalid"
+      mat-dialog-close
+    >
+      {{ edit ? "SAVE" : "REGISTER" }}
+    </button>
+  </div>
+</form>

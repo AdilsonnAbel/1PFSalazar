@@ -1,28 +1,30 @@
 $shadow: hsl(210, 30%, 24%);
 
 :host {
-  display: grid;
-  grid-template: 20px max-content 20px 1fr / 20px 340px 20px 1fr;
+  // display: grid;
+  // grid-template: 20px max-content 20px 1fr / 20px 340px 20px 1fr;
+  // background-color: transparent;
 
-  > div {
-    grid-area: 2 / 2 / 3 / 3;
+  // > div {
+  //   // grid-area: 2 / 2 / 3 / 3;
+  //   display: grid;
+  //   grid-template: 20px max-content 20px / 20px 300px 20px;
+  //   box-shadow: $shadow 0px -15px 15px -15px, $shadow 0px 15px 15px -15px;
+  //   border-radius: 10px;
+  // background-color: hsla(231, 48%, 48%, 0.15);
+
+  > form {
+    // grid-area: 2 / 2 / 3 / 3;
     display: grid;
-    grid-template: 20px max-content 20px / 20px 300px 20px;
-    box-shadow: $shadow 0px -15px 15px -15px, $shadow 0px 15px 15px -15px;
-    border-radius: 10px;
-    background-color: hsla(231, 48%, 48%, 0.15);
+    grid-template-columns: 300px;
 
-    > form {
-      grid-area: 2 / 2 / 3 / 3;
-      display: grid;
+    > h1 {
+      margin: 0;
+    }
 
-      > h1 {
-        margin: 0;
-      }
-
-      > div {
-        padding-top: 10px;
-      }
+    > div {
+      padding-top: 10px;
     }
   }
+  // }
 }

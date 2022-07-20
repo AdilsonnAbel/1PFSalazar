@@ -1,11 +1,4 @@
 <mat-nav-list>
-  <a mat-list-item [routerLink]="['/form/new']" routerLinkActive="select">
-    Add Student
-  </a>
-  <a mat-list-item [routerLink]="['/edit']" routerLinkActive="select">
-    Edit or Delete Student
-  </a>
-  <mat-divider></mat-divider>
   <a
     mat-list-item
     *ngFor="let room of rooms"

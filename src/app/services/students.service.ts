@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  Student,
-  StudentId,
-  typeClassroom,
-  typeData,
-} from '../interfaces/student';
-import { titleCase } from '../utils/functions';
+import { Student, typeClassroom, typeData } from '../interfaces/student';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StudentsService {
-  private rooms: typeClassroom[] = [
+  private _rooms: typeClassroom[] = [
     'alpha',
     'beta',
     'gamma',
@@ -22,71 +17,59 @@ export class StudentsService {
     'eta',
   ];
 
-  private students: Record<string, Student> = {};
+  private _data: Record<string, Student> = {};
+  private _students: BehaviorSubject<Student[]> = new BehaviorSubject(
+    this._dataArray()
+  );
+  private _students$: Observable<Student[]> = this._students.asObservable();
 
   constructor(private http: HttpClient) {
-    this.DB();
+    this.http
+      .get<Record<string, Student>>('assets/students.json')
+      .subscribe((data) => {
+        this._data = data;
+        this._refresh();
+      });
+  }
+
+  get rooms(): typeClassroom[] {
+    return this._rooms;
+  }
+
+  get students$(): Observable<Student[]> {
+    return this._students$.pipe(map((d) => d.filter(({ active }) => active)));
+  }
+
+  public getClassroom$(roomName: typeClassroom): Observable<Student[]> {
+    return this._students$.pipe(
+      map((d) =>
+        d.filter(
+          ({ active, data: { classroom } }) => active && classroom === roomName
+        )
+      )
+    );
   }
 
   public addStudent(student: Student): void {
-    this.students[student.id] = student;
+    this._data[student.id] = student;
+    this._refresh();
   }
 
   public editStudent(id: number, data: typeData): void {
-    this.students[id].data = data;
+    this._data[id].data = data;
+    this._refresh();
   }
 
   public deleteStudent(id: number): void {
-    this.students[id].active = false;
+    this._data[id].active = false;
+    this._refresh();
   }
 
-  public getClassroom(roomName: typeClassroom): Student[] {
-    return this.arrStudents().filter(
-      ({ data: { classroom } }) => classroom === roomName
-    );
+  private _refresh(): void {
+    this._students.next(this._dataArray());
   }
 
-  public getStudentIds(): StudentId[] {
-    return this.arrStudents().map(
-      ({
-        id,
-        data: {
-          names: { firstNames, lastNames },
-        },
-      }) => ({
-        id,
-        name: `${firstNames.map(titleCase).join(' ')} ${lastNames
-          .map(titleCase)
-          .join(' ')}`,
-      })
-    );
-  }
-
-  public getStudent(idx: number): Student | undefined {
-    return this.arrStudents().find(({ id }) => id === idx);
-  }
-
-  public getStudentsName(): string[] {
-    return this.arrStudents().map(
-      ({
-        data: {
-          names: { firstNames, lastNames },
-        },
-      }) => `${firstNames.join(' ')} ${lastNames.join(' ')}`
-    );
-  }
-
-  public getRoomsNames(): typeClassroom[] {
-    return this.rooms;
-  }
-
-  private arrStudents(): Student[] {
-    return Object.values(this.students).filter(({ active }) => active);
-  }
-
-  private DB(): void {
-    this.http
-      .get<{}>('assets/students.json')
-      .subscribe((data: Record<string, Student>) => (this.students = data));
+  private _dataArray(): Student[] {
+    return Object.values(this._data);
   }
 }
