@@ -80,7 +80,7 @@ export class ContentComponent implements OnInit, OnDestroy {
     return this._searchStudent.controls.search;
   }
 
-  get filteredClassroom(): Observable<Student[]> {
+  get filteredClassroom$(): Observable<Student[]> {
     return this._filteredClassroom$;
   }
 

@@ -13,6 +13,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { MatCardModule } from '@angular/material/card';
+
 @NgModule({
   exports: [
     MatToolbarModule,
@@ -27,6 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTableModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatCardModule,
   ],
 })
 export class MaterialModule {}

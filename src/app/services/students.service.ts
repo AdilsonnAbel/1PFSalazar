@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Student, typeClassroom, typeData } from '../interfaces/student';
+import {
+  Course,
+  Student,
+  typeClassroom,
+  typeData,
+} from '../interfaces/student';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
 @Injectable({
@@ -38,6 +43,12 @@ export class StudentsService {
 
   get students$(): Observable<Student[]> {
     return this._students$.pipe(map((d) => d.filter(({ active }) => active)));
+  }
+
+  get getCourses$(): Observable<Course[]> {
+    return this.http
+      .get<Record<string, Course>>('assets/courses.json')
+      .pipe(map((data) => Object.values(data)));
   }
 
   public getClassroom$(roomName: typeClassroom): Observable<Student[]> {

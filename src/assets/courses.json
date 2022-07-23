@@ -1,0 +1,47 @@
+{
+  "001": {
+    "area": "Programming",
+    "name": "React Js",
+    "description": "A JavaScript library for building user interfaces."
+  },
+  "002": {
+    "area": "Data",
+    "name": "Data Science",
+    "description": "Multidisciplinary approach to extracting actionable insights from the large and ever-increasing volumes of data."
+  },
+  "003": {
+    "area": "Programming",
+    "name": "UX Research",
+    "description": "The systematic study of target users and their requirements."
+  },
+  "004": {
+    "area": "Programming",
+    "name": "SQL",
+    "description": "A domain-specific language used in programming and designed for managing data held in a relational database."
+  },
+  "005": {
+    "area": "Business",
+    "name": "Blockchain",
+    "description": "A growing list of records, called blocks, that are securely linked together using cryptography."
+  },
+  "006": {
+    "area": "Product",
+    "name": "E-commerce",
+    "description": "The activity of electronically buying or selling of products on online services or over the Internet."
+  },
+  "007": {
+    "area": "Data",
+    "name": "Power BI",
+    "description": "A business analytics service by Microsoft."
+  },
+  "008": {
+    "area": "Programming",
+    "name": "Vue Js",
+    "description": "The Progressive JavaScript Framework."
+  },
+  "009": {
+    "area": "Marketing",
+    "name": "Branding",
+    "description": "The act of connecting a product (or b usiness) with a particular name, symbol, or features and ideas to make it recognizable."
+  }
+}

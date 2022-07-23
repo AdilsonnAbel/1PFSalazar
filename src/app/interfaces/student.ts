@@ -48,3 +48,9 @@ export interface ControlStudent {
 export interface ControlSearch {
   search: FormControl<string>;
 }
+
+export interface Course {
+  area: string;
+  name: string;
+  description: string;
+}

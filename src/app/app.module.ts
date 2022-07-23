@@ -17,6 +17,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { StateDirective } from './directives/state.directive';
 import { ClassroomPipe } from './pipes/classroom.pipe';
 import { NamesPipe } from './pipes/names.pipe';
+import { CoursesComponent } from './components/courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NamesPipe } from './pipes/names.pipe';
     StateDirective,
     ClassroomPipe,
     NamesPipe,
+    CoursesComponent,
   ],
   imports: [
     BrowserModule,
